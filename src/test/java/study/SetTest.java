@@ -13,6 +13,7 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SetTest {
+
   private Set<Integer> numbers;
 
   @BeforeEach
@@ -27,7 +28,9 @@ public class SetTest {
   @Test
   @DisplayName("[요구사항1] Set의 size() 메소드를 활용해 numbers의 크기를 확인하는 테스트")
   void setSizeTest() {
-    assertThat(numbers.size()).isEqualTo(3);
+    // size를 꺼내서 비교하는것말고 assertj 의 api 를 사용할수도 있다.
+    assertThat(numbers).hasSize(3);
+//    assertThat(numbers.size()).isEqualTo(3);
   }
 
   @Test
@@ -50,5 +53,12 @@ public class SetTest {
   @DisplayName("[요구사항3] 입력 값에 따라 결과 값이 다른 경우에 대한 테스트")
   void parameterizedTestV2(int input, boolean expected) {
     assertThat(numbers.contains(input)).isEqualTo(expected);
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {1, 2, 3})
+  @DisplayName("[리뷰 사항] assertj 에서 제공하는 contains 사용 테스트")
+  void assertThatContainsTest(int input) {
+    assertThat(numbers).contains(input);
   }
 }
